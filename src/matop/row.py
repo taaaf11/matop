@@ -25,17 +25,15 @@ class Row:
             product += self.__nums[row_idx] * column[row_idx]
         
         return product
-        
-    def as_latex(self) -> str:
-        return " & ".join(map(str, self.nums))
     
-    def __mul__(self, other: int):
+    def mul_by_scalar(self, scalar: int):
         new_row: list[int] = []
         
         for num in self.nums:
-            new_row.append(num * other)
-            
-        return Row(*new_row)
+            new_row.append(num * scalar)
+        
+    def as_latex(self) -> str:
+        return " & ".join(map(str, self.nums))
     
     def __add__(self, other: Row) -> Row:
         new_row: list[int] = []
