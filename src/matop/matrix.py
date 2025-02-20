@@ -109,6 +109,11 @@ class Matrix:
         latex += f"\n\\end{{{brackets.value}matrix}}"
         
         return latex
+    
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Matrix):
+            return NotImplemented
+        return self.__rows == other.rows
         
     def __repr__(self) -> str:
         r = "Matrix(\n"
