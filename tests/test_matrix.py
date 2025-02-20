@@ -1,11 +1,7 @@
 import unittest
 
-from src.matop.matrix import BracketsType, Matrix, MatrixOrder
-# from matop.matrix import BracketsType, Matrix, MatrixOrder
-
-
-# from src.matop.row import Row
-from matop.row import Row
+from matop.matrix import BracketsType, Matrix, MatrixOrder  # type: ignore
+from matop.row import Row  # type: ignore
 
 
 class TestMatrix(unittest.TestCase):
