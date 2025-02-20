@@ -3,7 +3,8 @@ from __future__ import annotations
 from collections.abc import MutableSequence
 import unittest
 
-from src.matop.row import Row
+# from src.matop.row import Row
+from matop.row import Row
 
 
 class TestRow(unittest.TestCase):

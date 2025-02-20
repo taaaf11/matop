@@ -18,3 +18,9 @@ Homepage = "https://github.com/taaaf11/matop"
 # Documentation = "https://readthedocs.org"
 Repository = "https://github.com/taaaf11/matop.git"
 Issues = "https://github.com/taaaf11/matop/issues"
+
+
+[tool.pytest.ini_options]
+pythonpath = [
+  "src"
+]
