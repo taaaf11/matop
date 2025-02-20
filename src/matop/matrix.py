@@ -78,8 +78,9 @@ class Matrix:
         self.__rows[row1_idx] = self.__rows[row2_idx]
         self.__rows[row2_idx] = temp
     
-    def scalar_multiply(self, row_idx: int, scalar: int):
-        self.__rows[row_idx].mul_by_scalar(scalar)
+    def scalar_multiply(self, scalar: int):
+        for row in self.__rows:
+            row.mul_by_scalar(scalar)
     
     @classmethod
     def dot_multiply(cls, first: Matrix, second: Matrix) -> Matrix:
