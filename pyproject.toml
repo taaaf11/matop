@@ -1,0 +1,20 @@
+[project]
+name = "matop"
+version = "0.0.1"
+description = "A package for creating and d"
+authors = [
+  {name = "Muhammad Altaaf", email = "taafuuu@gmail.com"},
+]
+keywords = ["matrix"]
+
+classifiers = [
+  # Indicate who your project is intended for
+  "Intended Audience :: Users",
+
+  # Specify the Python versions you support here.
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.6",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+]
