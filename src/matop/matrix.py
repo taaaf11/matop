@@ -6,6 +6,13 @@ from enum import Enum
 
 from matop.row import Row
 
+try:
+    get_ipython  # check if imported into ipython is running
+except NameError:
+    Math = None
+else:
+    from IPython.display import Math
+
 
 class BracketsType(Enum):
     PLAIN = ""
@@ -40,7 +47,8 @@ class Matrix:
         self.__rows: MutableSequence[Row] = []
         self.brackets_type: BracketsType = BracketsType.SQUARE
         self.print_notation = False
-        self.auto_print = False
+        # self.auto_print = False
+        self.__last_operation: MatrixOperation | None = None
 
         for row in rows:
             self._add_row(row)
@@ -91,16 +99,14 @@ class Matrix:
 
         self.__rows[row1_idx] += self.__rows[row2_idx]
         
-        if self.auto_print:
-            print(self.as_latex(MatrixOperation("ADD_ROWS", i=row1_idx + 1, j=row2_idx + 1, k=1)))
+        self.__last_operation = MatrixOperation("ADD_ROWS", i=row1_idx + 1, j=row2_idx + 1, k=1)
         
     def interchange_rows(self, row1_idx: int, row2_idx: int) -> None:
         temp = self.__rows[row1_idx]
         self.__rows[row1_idx] = self.__rows[row2_idx]
         self.__rows[row2_idx] = temp
-
-        if self.auto_print:
-            print(self.as_latex(MatrixOperation("INTERCHANGE", i=row1_idx + 1, j=row2_idx + 1)))
+        
+        self.__last_operation = MatrixOperation("INTERCHANGE", i=row1_idx + 1, j=row2_idx + 1)
     
     def scalar_multiply(self, scalar: int) -> None:
         for row in self.__rows:
@@ -108,9 +114,8 @@ class Matrix:
     
     def scalar_multiply_row(self, row_idx: int, scalar: int) -> None:
         self.__rows[row_idx].mul_by_scalar(scalar)
-        
-        if self.auto_print:
-            print(self.as_latex(MatrixOperation("SCALAR_MULTIPLY", i=row_idx + 1, k=scalar)))
+
+        self.__last_operation = MatrixOperation("SCALAR_MULTIPLY", i=row_idx + 1, k=scalar)
         
     @classmethod
     def dot_multiply(cls, first: Matrix, second: Matrix) -> Matrix:
@@ -126,8 +131,9 @@ class Matrix:
         
         return cls(*new_mat_rows)
         
-    def as_latex(self, operation: MatrixOperation | None = None) -> str:
+    def as_latex(self) -> str:
         latex = ""
+        operation = self.__last_operation
         
         if self.print_notation and operation is not None:
             latex += operation.message + "\n"
@@ -144,6 +150,9 @@ class Matrix:
         latex += f"\n\\end{{{self.brackets_type.value}matrix}}"
         
         return latex
+
+    def as_ipy_math(self) -> Math:
+        return Math(self.as_latex())
     
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, Matrix):
