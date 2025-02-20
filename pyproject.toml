@@ -1,7 +1,7 @@
 [project]
 name = "matop"
 version = "0.0.1"
-description = "A package for creating and d"
+description = "A package for creating matrices and doing basic operations on them."
 authors = [
   {name = "Muhammad Altaaf", email = "taafuuu@gmail.com"},
 ]
@@ -12,9 +12,13 @@ classifiers = [
   "Intended Audience :: Users",
 
   # Specify the Python versions you support here.
-  "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.6",
-  "Programming Language :: Python :: 3.7",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
 ]
+
+
+# [project.urls]
+# Homepage = "https://example.com"
+# Documentation = "https://readthedocs.org"
+# Repository = "https://github.com/me/spam.git"
+# Issues = "https://github.com/me/spam/issues"
+# Changelog = "https://github.com/me/spam/blob/master/CHANGELOG.md"
