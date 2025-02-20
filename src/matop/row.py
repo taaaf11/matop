@@ -43,6 +43,11 @@ class Row:
             
         return Row(*new_row)
     
+    def __eq__(self, value: object) -> bool:
+        if not isinstance(value, Row):
+            return NotImplemented
+        return self.nums == value.nums
+    
     def __len__(self):
         return len(self.nums)
     
