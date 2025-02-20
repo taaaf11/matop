@@ -20,11 +20,27 @@ class BracketsType(Enum):
 class MatrixOrder:
     rows: int
     columns: int
+    
+    
+class MatrixOperation:
+    def __init__(self, op: str, i = None, j = None, k = None) -> None:
+        match op:
+            case "ADD_ROWS":
+                self.message = fr"R_{i} + {k}R_{j} \rightarrow R_{i}"
+            case "INTERCHANGE":
+                self.message = fr"R_{i} \leftrightarrow R_{j}"
+            case "SCALAR_MULTIPLY":
+                self.message = fr"{k}R_{i} \rightarrow R_{i}"
+            case _:
+                self.message = "Unsupported."
 
 
 class Matrix:
     def __init__(self, *rows: Row) -> None:
         self.__rows: MutableSequence[Row] = []
+        self.brackets_type: BracketsType = BracketsType.SQUARE
+        self.print_notation = False
+        self.auto_print = False
 
         for row in rows:
             self._add_row(row)
@@ -75,10 +91,16 @@ class Matrix:
 
         self.__rows[row1_idx] += self.__rows[row2_idx]
         
+        if self.auto_print:
+            print(self.as_latex(MatrixOperation("ADD_ROWS", i=row1_idx + 1, j=row2_idx + 1, k=1)))
+        
     def interchange_rows(self, row1_idx: int, row2_idx: int) -> None:
         temp = self.__rows[row1_idx]
         self.__rows[row1_idx] = self.__rows[row2_idx]
         self.__rows[row2_idx] = temp
+
+        if self.auto_print:
+            print(self.as_latex(MatrixOperation("INTERCHANGE", i=row1_idx + 1, j=row2_idx + 1)))
     
     def scalar_multiply(self, scalar: int) -> None:
         for row in self.__rows:
@@ -86,6 +108,9 @@ class Matrix:
     
     def scalar_multiply_row(self, row_idx: int, scalar: int) -> None:
         self.__rows[row_idx].mul_by_scalar(scalar)
+        
+        if self.auto_print:
+            print(self.as_latex(MatrixOperation("SCALAR_MULTIPLY", i=row_idx + 1, k=scalar)))
         
     @classmethod
     def dot_multiply(cls, first: Matrix, second: Matrix) -> Matrix:
@@ -101,8 +126,13 @@ class Matrix:
         
         return cls(*new_mat_rows)
         
-    def as_latex(self, brackets: BracketsType) -> str:
-        latex = f"\\begin{{{brackets.value}matrix}}\n"
+    def as_latex(self, operation: MatrixOperation | None = None) -> str:
+        latex = ""
+        
+        if self.print_notation and operation is not None:
+            latex += operation.message + "\n"
+
+        latex += f"\\begin{{{self.brackets_type.value}matrix}}\n"
         rows_latex: list[str] = []
         
         for row in self.__rows:
@@ -111,7 +141,7 @@ class Matrix:
         # add double slash ("\\") at the end of each latex row
         latex += "\\\\\n".join(rows_latex)
         
-        latex += f"\n\\end{{{brackets.value}matrix}}"
+        latex += f"\n\\end{{{self.brackets_type.value}matrix}}"
         
         return latex
     
@@ -134,4 +164,4 @@ if __name__ == "__main__":
         Row(3,9)
     )
 
-    print(mat.as_latex(BracketsType.SQUARE))
+    # print(mat.as_latex(BracketsType.SQUARE))
