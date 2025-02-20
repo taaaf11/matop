@@ -1,25 +1,25 @@
 from __future__ import annotations
 
-from collections.abc import Iterator
+from collections.abc import MutableSequence, Iterator, Sequence
 
 
 class Row:
-    def __init__(self, *nums: int) -> None:
-        self.__nums: list[int] = list(nums)
+    def __init__(self, *nums: int | float) -> None:
+        self.__nums: MutableSequence[int | float] = list(nums)
         
     @property
-    def nums(self) -> list[int]:
+    def nums(self) -> Sequence[int | float]:
         return self.__nums
     
-    def mul_by_col(self, column: list[int]) -> int:
-        product: int = 0
+    def mul_by_col(self, column: Sequence[int | float]) -> int | float:
+        product: int | float = 0
         
         for row_idx in range(len(self)):
             product += self.__nums[row_idx] * column[row_idx]
         
         return product
     
-    def mul_by_scalar(self, scalar: int) -> None:
+    def mul_by_scalar(self, scalar: int | float) -> None:
         for index in range(len(self.__nums)):
             self.__nums[index] *= scalar
         
@@ -27,7 +27,7 @@ class Row:
         return " & ".join(map(str, self.__nums))
     
     def __add__(self, other: Row) -> Row:
-        new_row: list[int] = []
+        new_row: MutableSequence[int | float] = []
         
         for (index, num) in enumerate(self.__nums):
             new_row.append(num + other.nums[index])
@@ -42,7 +42,7 @@ class Row:
     def __len__(self) -> int:
         return len(self.__nums)
     
-    def __iter__(self) -> Iterator[int]:
+    def __iter__(self) -> Iterator[int | float]:
         for num in self.__nums:
             yield num
     
@@ -52,11 +52,11 @@ class Row:
  
 if __name__ == "__main__":
     row = Row(1,2,3)
-    print(row.as_latex())
+    # print | float(row.as_latex())
     
     # iter toest
     # fr num in row:
-    #     print(num)
+    #     print | float(num)
     
-    # print(f"{row * 2=}")
-    # print(f"{row * 2 + Row(9, 10, 11)=}")
+    # print | float(f"{row * 2=}")
+    # print | float(f"{row * 2 + Row(9, 10, 11)=}")

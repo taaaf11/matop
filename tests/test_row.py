@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+from collections.abc import MutableSequence
 import unittest
 
 from src.matop.row import Row
@@ -12,7 +15,7 @@ class TestRow(unittest.TestCase):
         self.assertEqual(self.row1.nums, [1, 2, 3])
         
     def test_mul_by_col(self):
-        column = [7, 9, 11]
+        column: MutableSequence[int | float] = [7, 9, 11]
         self.assertEqual(self.row1.mul_by_col(column), 58)
         
     def test_mul_by_scalar(self):

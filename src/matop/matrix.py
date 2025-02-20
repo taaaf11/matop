@@ -4,6 +4,8 @@ from .row import Row
 from enum import Enum
 from dataclasses import dataclass
 
+from collections.abc import MutableSequence, Sequence
+
 
 class BracketsType(Enum):
     PLAIN = ""
@@ -22,7 +24,7 @@ class MatrixOrder:
 
 class Matrix:
     def __init__(self, *rows: Row) -> None:
-        self.__rows: list[Row] = []
+        self.__rows: MutableSequence[Row] = []
 
         for row in rows:
             self._add_row(row)
@@ -35,12 +37,12 @@ class Matrix:
         )
     
     @property
-    def rows(self) -> list[Row]:
+    def rows(self) -> Sequence[Row]:
         return self.__rows
     
     @property
-    def columns(self) -> list[list[int]]:
-        columns: list[list[int]] = []
+    def columns(self) -> Sequence[Sequence[int | float]]:
+        columns: Sequence[list[int | float]] = []
         
         for _ in range(self.order.columns):
             columns.append([])
@@ -87,10 +89,10 @@ class Matrix:
         
     @classmethod
     def dot_multiply(cls, first: Matrix, second: Matrix) -> Matrix:
-        new_mat_rows: list[Row] = []
+        new_mat_rows: MutableSequence[Row] = []
         
         for row in first.rows:
-            formed_row: list[int] = []
+            formed_row: MutableSequence[int | float] = []
             
             for column in second.columns:
                 formed_row.append(row.mul_by_col(column))
