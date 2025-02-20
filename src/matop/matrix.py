@@ -74,7 +74,9 @@ class Matrix:
         self.__rows[row1_idx] += self.__rows[row2_idx]
         
     def interchange_rows(self, row1_idx: int, row2_idx: int):
-        self.__rows[row1_idx].swap(self.__rows[row2_idx])
+        temp = self.__rows[row1_idx]
+        self.__rows[row1_idx] = self.__rows[row2_idx]
+        self.__rows[row2_idx] = temp
     
     def scalar_multiply(self, row_idx: int, scalar: int):
         self.__rows[row_idx].mul_by_scalar(scalar)

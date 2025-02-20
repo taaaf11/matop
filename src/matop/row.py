@@ -9,11 +9,6 @@ class Row:
     def nums(self) -> list[int]:
         return self.__nums
     
-    def swap(self, other: Row):
-        temp = self.__nums
-        self.__nums = other.nums
-        other.__nums = temp
-    
     def mul_by_col(self, column: list[int]) -> int:
         product: int = 0
         
