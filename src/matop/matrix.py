@@ -4,7 +4,7 @@ from collections.abc import MutableSequence, Sequence
 from dataclasses import dataclass
 from enum import Enum
 
-from row import Row
+from matop.row import Row
 
 
 class BracketsType(Enum):
