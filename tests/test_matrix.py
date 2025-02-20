@@ -68,6 +68,17 @@ class TestMatrix(unittest.TestCase):
             )
         )
     
+    def test_scalar_multiply_row(self):
+        self.matrix1.scalar_multiply_row(0, 2)
+        self.assertEqual(
+            self.matrix1,
+            Matrix(
+                Row(2, 4, 6),
+                Row(7, 8, 9),
+                Row(3, 5, 7),
+            )
+        )
+    
     def test_dot_multiply(self):
         mat1 = Matrix(
             Row(1, 2, 3),
