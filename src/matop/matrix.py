@@ -52,6 +52,13 @@ class Matrix:
 
         for row in rows:
             self._add_row(row)
+
+        if Math is not None:
+            def as_ipy_math(instance) -> Math:
+                assert not isinstance(Math, type(None))
+                return Math(instance.as_latex())
+            self.__dict__["as_ipy_math"] = as_ipy_math
+
         
     @property
     def order(self) -> MatrixOrder:
@@ -156,9 +163,6 @@ class Matrix:
         latex += f"\n\\end{{{self.brackets_type.value}matrix}}"
         
         return latex
-
-    def as_ipy_math(self) -> Math:
-        return Math(self.as_latex())
     
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, Matrix):
