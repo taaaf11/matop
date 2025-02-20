@@ -97,6 +97,21 @@ class TestMatrix(unittest.TestCase):
                 Row(139, 154),
             )
         )
+        
+    # test for private method: Matrix._add_row
+    def test__add_row(self):
+        self.matrix1._add_row(
+            Row(12, 13, 14)
+        )
+        self.assertEqual(
+            self.matrix1.rows,
+            [
+                Row(1, 2, 3),
+                Row(7, 8, 9),
+                Row(3, 5, 7),
+                Row(12, 13, 14)
+            ]
+        )
     
     # should not be considered complete
     @unittest.skip("The test code is incomplete")
