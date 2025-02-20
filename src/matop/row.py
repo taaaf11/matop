@@ -20,8 +20,18 @@ class Row:
         return product
     
     def mul_by_scalar(self, scalar: int | float) -> None:
+        is_fractional_zero = lambda n: isinstance(n, float) and str(n).split(".")[1] == "0"
+
+        if is_fractional_zero(scalar):
+            scalar = int(scalar)
+
         for index in range(len(self.__nums)):
-            self.__nums[index] *= scalar
+            product = self.__nums[index] * scalar
+
+            if is_fractional_zero(product):
+                product = int(product)
+
+            self.__nums[index] = int(product)
         
     def as_latex(self) -> str:
         return " & ".join(map(str, self.__nums))

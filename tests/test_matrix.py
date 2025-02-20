@@ -35,11 +35,18 @@ class TestMatrix(unittest.TestCase):
             ]
         )
         
-    def test_add_rows(self):
+    def test_add_rows_without_scalar(self):
         self.matrix1.add_rows(0, 1)
         self.assertEqual(
             self.matrix1.rows[0].nums,
             [8, 10, 12]
+        )
+        
+    def test_add_rows_with_scalar(self):
+        self.matrix1.add_rows(0, 1, 5)
+        self.assertEqual(
+            self.matrix1.rows[0].nums,
+            [36, 42, 48]
         )
         
     def test_interchange_rows(self):
