@@ -1,6 +1,5 @@
 import unittest
 
-
 from src.matop.matrix import BracketsType, Matrix, MatrixOrder
 from src.matop.row import Row
 

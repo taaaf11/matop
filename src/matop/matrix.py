@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from .row import Row
-from enum import Enum
-from dataclasses import dataclass
-
 from collections.abc import MutableSequence, Sequence
+from dataclasses import dataclass
+from enum import Enum
+
+from row import Row
 
 
 class BracketsType(Enum):
@@ -58,7 +58,7 @@ class Matrix:
     
     @property
     def columns(self) -> Sequence[Sequence[int | float]]:
-        columns: Sequence[list[int | float]] = []
+        columns: list[list[int | float]] = []
         
         for _ in range(self.order.columns):
             columns.append([])
