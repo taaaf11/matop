@@ -21,7 +21,7 @@ class MatrixOrder:
 
 
 class Matrix:
-    def __init__(self, *rows: Row):
+    def __init__(self, *rows: Row) -> None:
         self.__rows: list[Row] = []
 
         for row in rows:
@@ -54,7 +54,7 @@ class Matrix:
         
         return columns
     
-    def _add_row(self, row: Row):
+    def _add_row(self, row: Row) -> None:
         """
         Don't confuse this with `add_rows`. This function
         "adds" a row to the matrix, increasing its number of rows.
@@ -65,7 +65,7 @@ class Matrix:
         
         self.__rows.append(row)
             
-    def add_rows(self, row1_idx: int, row2_idx: int):
+    def add_rows(self, row1_idx: int, row2_idx: int) -> None:
         """
         Don't confuse this with `_add_row`. This function
         adds two rows present in the current matrix
@@ -73,16 +73,16 @@ class Matrix:
 
         self.__rows[row1_idx] += self.__rows[row2_idx]
         
-    def interchange_rows(self, row1_idx: int, row2_idx: int):
+    def interchange_rows(self, row1_idx: int, row2_idx: int) -> None:
         temp = self.__rows[row1_idx]
         self.__rows[row1_idx] = self.__rows[row2_idx]
         self.__rows[row2_idx] = temp
     
-    def scalar_multiply(self, scalar: int):
+    def scalar_multiply(self, scalar: int) -> None:
         for row in self.__rows:
             row.mul_by_scalar(scalar)
     
-    def scalar_multiply_row(self, row_idx: int, scalar: int):
+    def scalar_multiply_row(self, row_idx: int, scalar: int) -> None:
         self.__rows[row_idx].mul_by_scalar(scalar)
         
     @classmethod

@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+from collections.abc import Iterator
+
 
 class Row:
-    def __init__(self, *nums: int):
+    def __init__(self, *nums: int) -> None:
         self.__nums: list[int] = list(nums)
         
     @property
@@ -17,7 +19,7 @@ class Row:
         
         return product
     
-    def mul_by_scalar(self, scalar: int):
+    def mul_by_scalar(self, scalar: int) -> None:
         for index in range(len(self.__nums)):
             self.__nums[index] *= scalar
         
@@ -37,10 +39,10 @@ class Row:
             return NotImplemented
         return self.__nums == value.nums
     
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.__nums)
     
-    def __iter__(self):
+    def __iter__(self) -> Iterator[int]:
         for num in self.__nums:
             yield num
     
