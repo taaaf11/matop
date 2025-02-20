@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from row import Row
+from .row import Row
 from enum import Enum
 from dataclasses import dataclass
 
