@@ -10,9 +10,6 @@ keywords = ["matrix"]
 classifiers = [
   # Indicate who your project is intended for
   "Intended Audience :: Users",
-
-  # Specify the Python versions you support here.
-  "Programming Language :: Python :: 3.10",
 ]
 
 
