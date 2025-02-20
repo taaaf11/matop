@@ -8,9 +8,6 @@ class TestRow(unittest.TestCase):
         self.row1 = Row(1, 2, 3)
         self.row2 = Row(4, 5, 6)
 
-    def tearDown(self) -> None:
-        return super().tearDown()
-
     def test_nums_property(self):
         self.assertEqual(self.row1.nums, [1, 2, 3])
         
