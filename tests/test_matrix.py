@@ -99,6 +99,7 @@ class TestMatrix(unittest.TestCase):
         )
     
     # should not be considered complete
+    @unittest.skip("The test code is incomplete")
     def test_as_latex(self):
         rows_latex: str = "\n".join([row.as_latex() for row in self.matrix1.rows])
         
