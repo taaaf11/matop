@@ -10,8 +10,9 @@ try:
     get_ipython  # check if imported into ipython is running
 except NameError:
     Math = None
+    display = None
 else:
-    from IPython.display import Math
+    from IPython.core.display import Math, display
 
 
 class BracketsType(Enum):
@@ -33,7 +34,10 @@ class MatrixOperation:
     def __init__(self, op: str, i = None, j = None, k = None) -> None:
         match op:
             case "ADD_ROWS":
-                self.message = fr"R_{i} + {k}R_{j} \rightarrow R_{i}"
+                if k != 1:
+                    self.message = fr"R_{i} + {k}R_{j} \rightarrow R_{i}"
+                else:
+                    self.message = fr"R_{i} + R_{j} \rightarrow R_{i}"
             case "INTERCHANGE":
                 self.message = fr"R_{i} \leftrightarrow R_{j}"
             case "SCALAR_MULTIPLY":
@@ -46,19 +50,13 @@ class Matrix:
     def __init__(self, *rows: Row) -> None:
         self.__rows: MutableSequence[Row] = []
         self.brackets_type: BracketsType = BracketsType.SQUARE
-        self.print_notation = False
-        # self.auto_print = False
+        self.print_notation = True
+        self.auto_print = Math is not None  # of course this can be changed
+        
         self.__last_operation: MatrixOperation | None = None
 
         for row in rows:
             self._add_row(row)
-
-        if Math is not None:
-            def as_ipy_math(instance) -> Math:
-                assert not isinstance(Math, type(None))
-                return Math(instance.as_latex())
-            self.__dict__["as_ipy_math"] = as_ipy_math
-
         
     @property
     def order(self) -> MatrixOrder:
@@ -114,12 +112,18 @@ class Matrix:
         
         self.__last_operation = MatrixOperation("ADD_ROWS", i=row1_idx + 1, j=row2_idx + 1, k=1)
         
+        if self.auto_print:
+            self._print_latex()
+        
     def interchange_rows(self, row1_idx: int, row2_idx: int) -> None:
         temp = self.__rows[row1_idx]
         self.__rows[row1_idx] = self.__rows[row2_idx]
         self.__rows[row2_idx] = temp
         
         self.__last_operation = MatrixOperation("INTERCHANGE", i=row1_idx + 1, j=row2_idx + 1)
+
+        if self.auto_print:
+            self._print_latex()
     
     def scalar_multiply(self, scalar: int) -> None:
         for row in self.__rows:
@@ -129,6 +133,9 @@ class Matrix:
         self.__rows[row_idx].mul_by_scalar(scalar)
 
         self.__last_operation = MatrixOperation("SCALAR_MULTIPLY", i=row_idx + 1, k=scalar)
+
+        if self.auto_print:
+            self._print_latex()
         
     @classmethod
     def dot_multiply(cls, first: Matrix, second: Matrix) -> Matrix:
@@ -163,6 +170,13 @@ class Matrix:
         latex += f"\n\\end{{{self.brackets_type.value}matrix}}"
         
         return latex
+    
+    def _print_latex(self) -> None:
+        latex = self.as_latex()
+        if Math is not None:
+            display(Math(latex))
+        else:
+            print(latex)
     
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, Matrix):
