@@ -96,8 +96,10 @@ class TestMatrix(unittest.TestCase):
             Row(11, 12),
         )
         
+        mat1.dot_multiply(mat2)
+        
         self.assertEqual(
-            Matrix.dot_multiply(mat1, mat2),
+            mat1,
             Matrix(
                 Row(58, 64),
                 Row(139, 154),
