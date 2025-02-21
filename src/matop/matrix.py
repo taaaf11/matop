@@ -43,6 +43,8 @@ class MatrixOperation:
                 self.message = fr"R_{i} \leftrightarrow R_{j}"
             case "SCALAR_MULTIPLY":
                 self.message = fr"{k}R_{i} \rightarrow R_{i}"
+            case "DOT_MULTIPLY":
+                ...
             case _:
                 self.message = "Unsupported."
 
@@ -137,19 +139,21 @@ class Matrix:
         if self.auto_print:
             self._print_latex()
         
-    @classmethod
-    def dot_multiply(cls, first: Matrix, second: Matrix) -> Matrix:
+    def dot_multiply(self, other: Matrix) -> None:
         new_mat_rows: MutableSequence[Row] = []
         
-        for row in first.rows:
+        for row in self.rows:
             formed_row: MutableSequence[int | float] = []
             
-            for column in second.columns:
+            for column in other.columns:
                 formed_row.append(row.mul_by_col(column))
             
             new_mat_rows.append(Row(*formed_row))
+            
+        self.__rows = new_mat_rows
         
-        return cls(*new_mat_rows)
+        if self.auto_print:
+            self._print_latex()
         
     def as_latex(self) -> str:
         latex = ""
