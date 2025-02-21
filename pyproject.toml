@@ -5,6 +5,7 @@ description = "A package for creating matrices and doing basic operations on the
 authors = [
   {name = "Muhammad Altaaf", email = "taafuuu@gmail.com"},
 ]
+readme = "README.md"
 keywords = ["matrix"]
 
 classifiers = [
