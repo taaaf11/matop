@@ -32,16 +32,20 @@ class MatrixOrder:
     
     
 class MatrixOperation:
+    ADD_ROWS = "ADD_ROWS"
+    INTERCHANGE = "INTERCHANGE"
+    SCALAR_MULTIPLY = "SCALAR_MULTIPLY"
+    
     def __init__(self, op: str, i = None, j = None, k = None) -> None:
         match op:
-            case "ADD_ROWS":
+            case MatrixOperation.ADD_ROWS:
                 if k != 1:
                     self.message = fr"R_{i} + {k}R_{j} \rightarrow R_{i}"
                 else:
                     self.message = fr"R_{i} + R_{j} \rightarrow R_{i}"
-            case "INTERCHANGE":
+            case MatrixOperation.INTERCHANGE:
                 self.message = fr"R_{i} \leftrightarrow R_{j}"
-            case "SCALAR_MULTIPLY":
+            case MatrixOperation.SCALAR_MULTIPLY:
                 self.message = fr"{k}R_{i} \rightarrow R_{i}"
             case "DOT_MULTIPLY":
                 ...
@@ -112,7 +116,7 @@ class Matrix:
         # reverse the process of multiplication after addition
         self.__rows[row2_idx].mul_by_scalar(1 / scalar)
         
-        self.__last_operation = MatrixOperation("ADD_ROWS", i=row1_idx + 1, j=row2_idx + 1, k=1)
+        self.__last_operation = MatrixOperation(MatrixOperation.ADD_ROWS, i=row1_idx + 1, j=row2_idx + 1, k=1)
         
         if self.auto_print:
             self._print_latex()
@@ -122,7 +126,7 @@ class Matrix:
         self.__rows[row1_idx] = self.__rows[row2_idx]
         self.__rows[row2_idx] = temp
         
-        self.__last_operation = MatrixOperation("INTERCHANGE", i=row1_idx + 1, j=row2_idx + 1)
+        self.__last_operation = MatrixOperation(MatrixOperation.INTERCHANGE, i=row1_idx + 1, j=row2_idx + 1)
 
         if self.auto_print:
             self._print_latex()
@@ -134,7 +138,7 @@ class Matrix:
     def scalar_multiply_row(self, row_idx: int, scalar: int) -> None:
         self.__rows[row_idx].mul_by_scalar(scalar)
 
-        self.__last_operation = MatrixOperation("SCALAR_MULTIPLY", i=row_idx + 1, k=scalar)
+        self.__last_operation = MatrixOperation(MatrixOperation.SCALAR_MULTIPLY, i=row_idx + 1, k=scalar)
 
         if self.auto_print:
             self._print_latex()
