@@ -10,7 +10,7 @@ When running in ipython kernel (jupyter lab or google colab), the functions auto
 1. Import required objects
 ```python
 from matop.row import Row
-from matop.matrix import Matrix, MatrixOperation
+from matop.matrix import Matrix
 ```
 2. Creating `Matrix` object
 ```python
@@ -32,6 +32,9 @@ mat1.add_rows(0, 1)
 
 # adds row 1 to row 0 after multiplying with scalar 2
 mat1.add_rows(0, 1, 2)
+
+# undo last operation
+mat1.undo()
 ```
 
 More operations are demonstrated in [this google colab notebook](https://colab.research.google.com/drive/1NuTzW1Ogtwq4X8HT-3cjqe_VEIAP8gfa?usp=sharing).
