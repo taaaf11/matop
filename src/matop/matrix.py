@@ -140,6 +140,9 @@ class Matrix:
             self._print_latex()
         
     def dot_multiply(self, other: Matrix) -> None:
+        if self.order.columns != other.order.rows:
+            raise InconsistentOrder("Inconsistent order for dot multiplication.")
+
         new_mat_rows: MutableSequence[Row] = []
         
         for row in self.rows:
