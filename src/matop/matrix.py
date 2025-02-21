@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from enum import Enum
 
 from matop.row import Row
+from matop.exceptions import InconsistentOrder
 
 try:
     get_ipython  # check if imported into ipython is running
@@ -92,7 +93,7 @@ class Matrix:
         """
 
         if len(self.__rows) > 0 and len(row) != len(self.__rows[0]):
-            raise Exception("Inconsistent number of columns.")
+            raise InconsistentOrder("Inconsistent number of columns.")
         
         self.__rows.append(row)
             

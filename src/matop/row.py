@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from collections.abc import MutableSequence, Iterator, Sequence
 
+from matop.exceptions import ZeroScalarMultiplication
+
 
 class Row:
     def __init__(self, *nums: int | float) -> None:
@@ -21,7 +23,7 @@ class Row:
     
     def mul_by_scalar(self, scalar: int | float) -> None:
         if scalar == 0:
-            raise Exception("Cannot multiply by scalar 0.\n")
+            raise ZeroScalarMultiplication("Cannot multiply by scalar 0.\n")
         if scalar == 1:
             return
         
