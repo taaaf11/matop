@@ -66,6 +66,20 @@ class Matrix:
         for row in rows:
             self._add_row(row)
         
+        # These two variables:
+        # self.__last_rows_state
+        # self.__last_operation_state
+        #
+        # store the state
+        # of the matrix before the latest mutating
+        # operation, such as add_rows, interchange_rows
+        # etc.
+        #
+        # These values are used by self.undo() function
+        # to undo the last action taken
+        #
+        # It is like the previous operation than
+        # self.__last_operation
         self.__last_rows_state = self.__rows    
         self.__last_operation_state = None
         
