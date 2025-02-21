@@ -37,14 +37,14 @@ class TestMatrix(unittest.TestCase):
         )
         
     def test_add_rows_without_scalar(self):
-        self.matrix1.add_rows(0, 1)
+        self.matrix1.add_rows(1, 2)
         self.assertEqual(
             self.matrix1.rows[0].nums,
             [8, 10, 12]
         )
         
     def test_add_rows_with_scalar(self):
-        self.matrix1.add_rows(0, 1, 5)
+        self.matrix1.add_rows(1, 2, 5)
         self.assertEqual(
             self.matrix1.rows[0].nums,
             [36, 42, 48]
@@ -54,7 +54,7 @@ class TestMatrix(unittest.TestCase):
         row_0_before = self.matrix1.rows[0]
         row_1_before = self.matrix1.rows[1]
         
-        self.matrix1.interchange_rows(0, 1)
+        self.matrix1.interchange_rows(1, 2)
         
         row_0_after = self.matrix1.rows[0]
         row_1_after = self.matrix1.rows[1]
@@ -76,7 +76,7 @@ class TestMatrix(unittest.TestCase):
         )
     
     def test_scalar_multiply_row(self):
-        self.matrix1.scalar_multiply_row(0, 2)
+        self.matrix1.scalar_multiply_row(1, 2)
         self.assertEqual(
             self.matrix1,
             Matrix(

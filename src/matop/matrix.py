@@ -121,24 +121,38 @@ class Matrix:
         adds two rows present in the current matrix
         """
         
+        # for indices
+        row1_idx -= 1
+        row2_idx -= 1
+        
         self.__rows[row2_idx].mul_by_scalar(scalar)
-        
         self.__rows[row1_idx] += self.__rows[row2_idx]
-        
         # reverse the process of multiplication after addition
         self.__rows[row2_idx].mul_by_scalar(1 / scalar)
         
-        self.__last_operation = MatrixOperation(MatrixOperation.ADD_ROWS, i=row1_idx + 1, j=row2_idx + 1, k=1)
+        # for displaying
+        row1_idx += 1
+        row2_idx += 1
+        
+        self.__last_operation = MatrixOperation(MatrixOperation.ADD_ROWS, i=row1_idx, j=row2_idx, k=1)
         
         if self.auto_print:
             self._print_latex()
         
     def interchange_rows(self, row1_idx: int, row2_idx: int) -> None:
+        # for indices
+        row1_idx -= 1
+        row2_idx -= 1
+        
         temp = self.__rows[row1_idx]
         self.__rows[row1_idx] = self.__rows[row2_idx]
         self.__rows[row2_idx] = temp
         
-        self.__last_operation = MatrixOperation(MatrixOperation.INTERCHANGE, i=row1_idx + 1, j=row2_idx + 1)
+        # for display
+        row1_idx += 1
+        row2_idx += 1
+        
+        self.__last_operation = MatrixOperation(MatrixOperation.INTERCHANGE, i=row1_idx, j=row2_idx)
 
         if self.auto_print:
             self._print_latex()
@@ -148,9 +162,9 @@ class Matrix:
             row.mul_by_scalar(scalar)
     
     def scalar_multiply_row(self, row_idx: int, scalar: int) -> None:
-        self.__rows[row_idx].mul_by_scalar(scalar)
+        self.__rows[row_idx - 1].mul_by_scalar(scalar)
 
-        self.__last_operation = MatrixOperation(MatrixOperation.SCALAR_MULTIPLY, i=row_idx + 1, k=scalar)
+        self.__last_operation = MatrixOperation(MatrixOperation.SCALAR_MULTIPLY, i=row_idx, k=scalar)
 
         if self.auto_print:
             self._print_latex()
