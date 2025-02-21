@@ -20,6 +20,11 @@ class Row:
         return product
     
     def mul_by_scalar(self, scalar: int | float) -> None:
+        if scalar == 0:
+            raise Exception("Cannot multiply by scalar 0.\n")
+        if scalar == 1:
+            return
+        
         is_fractional_zero = lambda n: isinstance(n, float) and str(n).split(".")[1] == "0"
 
         if is_fractional_zero(scalar):

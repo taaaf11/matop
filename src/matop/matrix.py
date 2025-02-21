@@ -102,13 +102,12 @@ class Matrix:
         adds two rows present in the current matrix
         """
         
-        if scalar not in {0, 1}:
-            self.__rows[row2_idx].mul_by_scalar(scalar)
-
+        self.__rows[row2_idx].mul_by_scalar(scalar)
+        
         self.__rows[row1_idx] += self.__rows[row2_idx]
         
-        if scalar not in {0, 1}:
-            self.__rows[row2_idx].mul_by_scalar(1 / scalar)
+        # reverse the process of multiplication after addition
+        self.__rows[row2_idx].mul_by_scalar(1 / scalar)
         
         self.__last_operation = MatrixOperation("ADD_ROWS", i=row1_idx + 1, j=row2_idx + 1, k=1)
         

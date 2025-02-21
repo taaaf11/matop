@@ -22,6 +22,8 @@ class TestRow(unittest.TestCase):
     def test_mul_by_scalar(self):
         self.row1.mul_by_scalar(scalar=5)
         self.assertEqual(self.row1.nums, [5, 10, 15])
+
+        self.assertRaises(Exception, self.row1.mul_by_scalar, scalar=0)
       
     # operator tests  
     def test_add(self):
