@@ -2,6 +2,7 @@
 Function for finding determinant of matrix.
 """
 
+
 from matop.matrix import Matrix
 from matop.row import Row
 
@@ -79,5 +80,10 @@ def get_cofactor_matrix(matrix: Matrix) -> Matrix:
     
     return Matrix(*new_rows)
 
-
-# def inverse()
+def transpose(matrix: Matrix) -> Matrix:
+    new_rows = []
+    
+    for column in matrix.columns:
+        new_rows.append(column)
+        
+    return Matrix(*new_rows)
