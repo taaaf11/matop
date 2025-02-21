@@ -3,6 +3,7 @@ from __future__ import annotations
 from collections.abc import MutableSequence, Sequence
 from dataclasses import dataclass
 from enum import Enum
+from typing import Any
 
 from matop.row import Row
 from matop.exceptions import InconsistentOrder
@@ -64,6 +65,17 @@ class Matrix:
 
         for row in rows:
             self._add_row(row)
+        
+        self.__last_rows_state = self.__rows    
+        self.__last_operation_state = None
+        
+    def __getattribute__(self, name: str) -> Any:
+        # instance methods that mutate the state of the matrix
+        if name in "add_rows interchange_rows scalar_multiply_row dot_multiply".split():
+            self.__last_rows_state = self.__rows
+            self.__last_operation_state = self.__last_operation
+
+        return object.__getattribute__(self, name)
         
     @property
     def order(self) -> MatrixOrder:
@@ -188,6 +200,13 @@ class Matrix:
             display(Math(latex))
         else:
             print(latex)
+            
+    def undo(self):
+        self.__rows = self.__last_rows_state
+        self.__last_operation = self.__last_operation_state
+        
+        if self.auto_print:
+            self._print_latex()
     
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, Matrix):
