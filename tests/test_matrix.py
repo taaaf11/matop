@@ -1,5 +1,6 @@
 import unittest
 
+from matop.exceptions import InconsistentOrder
 from matop.matrix import BracketsType, Matrix, MatrixOrder  # type: ignore
 from matop.row import Row  # type: ignore
 
@@ -86,6 +87,8 @@ class TestMatrix(unittest.TestCase):
         )
     
     def test_dot_multiply(self):
+        # matrix adopted from: https://www.mathsisfun.com/algebra/matrix-multiplying.html
+        
         mat1 = Matrix(
             Row(1, 2, 3),
             Row(4, 5, 6)
@@ -105,6 +108,17 @@ class TestMatrix(unittest.TestCase):
                 Row(139, 154),
             )
         )
+        
+        mat3 = Matrix(
+            Row(1),
+            Row(3)
+        )
+        mat4 = Matrix(
+            Row(2, 1),
+            Row(3, 5)
+        )
+        
+        self.assertRaises(InconsistentOrder, mat3.dot_multiply, mat4)
         
     # test for private method: Matrix._add_row
     def test__add_row(self):
