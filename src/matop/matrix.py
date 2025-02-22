@@ -88,7 +88,7 @@ class Matrix:
         
     def __getattribute__(self, name: str) -> Any:
         # instance methods that mutate the state of the matrix
-        if name in "add_rows interchange_rows scalar_multiply_row dot_multiply".split():
+        if name in "add_rows interchange_rows scalar_multiply_row dot_multiply transposify".split():
             self.__last_rows_state = self.__rows
             self.__last_operation_state = self.__last_operation
 
@@ -100,6 +100,21 @@ class Matrix:
             rows=len(self.__rows),
             columns=len(self.__rows[0])
         )
+        
+    @property
+    def transpose(self) -> Matrix:
+        new_rows: MutableSequence[Row] = []
+        
+        for column in self.columns:
+            new_rows.append(Row(*column))
+            
+        return Matrix(*new_rows)
+    
+    def transposify(self) -> None:
+        self.rows = self.transpose.rows
+        self.__last_operation = MatrixOperation(MatrixOperation.TRANSPOSE)
+        if self.auto_print:
+            self._print_latex()
 
     @property
     def rows(self) -> Sequence[Row]:

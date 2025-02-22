@@ -40,7 +40,7 @@ def next_submatrix(col_pos: int, matrix: Matrix, row_pos: int = 1) -> Matrix:
 
 def determinant(matrix: Matrix) -> float | None:
     if matrix.order.rows != matrix.order.columns:
-        return
+        return None
     
     det: float = 0
     
@@ -75,12 +75,4 @@ def get_cofactor_matrix(matrix: Matrix) -> Matrix:
         new_rows.append(Row(*new_row_interim))
         new_row_interim.clear()
     
-    return Matrix(*new_rows)
-
-def transpose(matrix: Matrix) -> Matrix:
-    new_rows: MutableSequence[Row] = []
-    
-    for column in matrix.columns:
-        new_rows.append(Row(*column))
-        
     return Matrix(*new_rows)
