@@ -67,6 +67,14 @@ class TestMatrix(unittest.TestCase):
                 Row(-6, 12, -6),
             )
         )
+        
+        matrix_with_impossible_cofactor = Matrix(
+            Row(1, 2, 3), 
+            Row(4, 5, 6),
+        )
+        self.assertIsNone(
+            Matrix.get_cofactor_matrix(matrix_with_impossible_cofactor)
+        )
     
     def test_determinant(self):
         self.assertEqual(
@@ -199,7 +207,7 @@ class TestMatrix(unittest.TestCase):
         
     # test for private method: Matrix._add_row
     def test__add_row(self):
-        self.matrix1._add_row(
+        self.matrix1._add_row( # type: ignore
             Row(12, 13, 14)
         )
         self.assertEqual(

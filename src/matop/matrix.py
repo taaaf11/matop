@@ -111,7 +111,10 @@ class Matrix:
             
         return Matrix(*new_rows)
     
-    def get_cofactor_matrix(self) -> Matrix:
+    def get_cofactor_matrix(self) -> Matrix | None:
+        if self.order.rows != self.order.columns:
+            return None
+        
         new_rows: list[Row] = []
         new_row_interim: MutableSequence[float] = []
         
