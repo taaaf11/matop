@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 from collections.abc import MutableSequence, Sequence
+from copy import deepcopy
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any
+from typing import Any, cast
 
 from matop.row import Row
 from matop.exceptions import InconsistentOrder
@@ -110,12 +111,22 @@ class Matrix:
             
         return Matrix(*new_rows)
     
-    def transposify(self) -> None:
-        self.rows = self.transpose.rows
-        self.__last_operation = MatrixOperation(MatrixOperation.TRANSPOSE)
-        if self.auto_print:
-            self._print_latex()
+    @property
+    def cofactor_matrix(self) -> Matrix:
+        new_rows: list[Row] = []
+        new_row_interim: MutableSequence[float] = []
+        
+        for row_index in range(1, len(self.rows) + 1):
+            for column_index in range(1, len(self.columns) + 1):
+                new_row_interim.append(
+                    Matrix.calculate_cofactor_sign(row_index, column_index) * cast(float, Matrix.determinant(Matrix.next_submatrix(row_index, column_index, self)))
+                )
 
+            new_rows.append(Row(*new_row_interim))
+            new_row_interim.clear()
+        
+        return Matrix(*new_rows)
+    
     @property
     def rows(self) -> Sequence[Row]:
         return self.__rows
@@ -226,6 +237,61 @@ class Matrix:
         
         if self.auto_print:
             self._print_latex()
+    
+    @staticmethod
+    def calculate_cofactor_sign(row_pos: int, col_pos: int) -> int:
+        return (-1) ** (row_pos + col_pos)
+    
+    @staticmethod
+    def next_minor(row_pos: int, col_pos: int, matrix: Matrix) -> float:
+        element: int | float = matrix.columns[col_pos - 1][row_pos - 1]
+        sign = Matrix.calculate_cofactor_sign(row_pos, col_pos)
+        return sign * element
+    
+    @staticmethod
+    def next_submatrix(row_pos: int, col_pos: int, matrix: Matrix) -> Matrix:
+        row_to_del = row_pos - 1
+        col_to_del = col_pos - 1
+        
+        new_rows = cast(MutableSequence[MutableSequence[int | float]], [row.nums for row in deepcopy(matrix).rows])
+        
+        del new_rows[row_to_del]
+        for row in new_rows:
+            del row[col_to_del]
+
+        return Matrix(*[Row(*row) for row in new_rows])
+    
+    @staticmethod
+    def determinant(matrix: Matrix) -> float | None:
+        if matrix.order.rows != matrix.order.columns:
+            return None
+        
+        det: float = 0
+        
+        if matrix.order.rows == 2 == matrix.order.columns:
+            a = matrix.columns[0][0]
+            d = matrix.columns[1][1]
+
+            b = matrix.columns[1][0]
+            c = matrix.columns[0][1]
+            
+            det += a * d - b * c
+
+            return det
+
+        if matrix.order.columns > 2:
+            for col_index in range(1, len(matrix.columns) + 1):
+                det += Matrix.next_minor(1, col_index, matrix) * cast(float, Matrix.determinant(Matrix.next_submatrix(1, col_index, matrix)))
+            
+        return det
+     
+    def transposify(self) -> None:
+        self.rows = self.transpose.rows
+
+        self.__last_operation = MatrixOperation(MatrixOperation.TRANSPOSE)
+
+        if self.auto_print:
+            self._print_latex()
         
     def as_latex(self) -> str:
         latex = ""
@@ -273,7 +339,7 @@ class Matrix:
             r += "  " + str(row) + "\n"
         r += ")"
         return r
-        
+
 
 if __name__ == "__main__":
     mat = Matrix(
