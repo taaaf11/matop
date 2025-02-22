@@ -62,6 +62,9 @@ class Row:
     def __iter__(self) -> Iterator[int | float]:
         for num in self.__nums:
             yield num
+            
+    # def __delitem__(self, index: int):
+        # del self.__nums[index]
     
     def __repr__(self) -> str:
         return "Row(" + ", ".join(map(str, self.__nums)) + ")"

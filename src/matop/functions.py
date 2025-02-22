@@ -2,6 +2,7 @@
 Function for finding determinant of matrix.
 """
 
+from typing import MutableSequence
 
 from matop.matrix import Matrix
 from matop.row import Row
@@ -24,14 +25,17 @@ def next_submatrix(col_pos: int, matrix: Matrix, row_pos: int = 1) -> Matrix:
     row_to_del = row_pos - 1
     col_to_del = col_pos - 1
     
-    alter_matrix = deepcopy(matrix)
+    new_rows = cast(MutableSequence[MutableSequence[int | float]], [row.nums for row in deepcopy(matrix).rows])
+    # alter_matrix = deepcopy(matrix)
     
-    del alter_matrix.rows[row_to_del]
+    del new_rows[row_to_del]
+    # del alter_matrix.rows[row_to_del]
 
-    for row in alter_matrix.rows:
-        del row[col_to_del]   
+    # for row in alter_matrix.rows:
+    for row in new_rows:
+        del row[col_to_del]
 
-    return alter_matrix
+    return Matrix(*[Row(*row) for row in new_rows])
 
 
 def determinant(matrix: Matrix) -> float | None:
@@ -67,13 +71,10 @@ def get_cofactor_matrix(matrix: Matrix) -> Matrix:
     
     for i in range(1, len(matrix.rows) + 1):
         for j in range(1, len(matrix.columns) + 1):
-            print(f"{i=} {j=}")
             value = calculate_cofactor_sign(i, j) * cast(float, determinant(next_submatrix(j, matrix, i)))
-            print(f"{value=}")
             new_row_interim.append(
                 calculate_cofactor_sign(i, j) * cast(float, determinant(next_submatrix(j, matrix, i)))
             )
-            print()
 
         new_rows.append(Row(*new_row_interim))
         new_row_interim.clear()
