@@ -38,7 +38,7 @@ class Row:
             if is_fractional_zero(product):
                 product = int(product)
 
-            self.__nums[index] = int(product)
+            self.__nums[index] = product
         
     def as_latex(self) -> str:
         return " & ".join(map(str, self.__nums))
