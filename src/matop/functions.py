@@ -42,7 +42,7 @@ def determinant(matrix: Matrix) -> float | None:
     if matrix.order.rows != matrix.order.columns:
         return
     
-    det = 0
+    det: float = 0
     
     if matrix.order.rows == 2 == matrix.order.columns:
         a = matrix.columns[0][0]

@@ -38,7 +38,7 @@ class MatrixOperation:
     SCALAR_MULTIPLY = "SCALAR_MULTIPLY"
     TRANSPOSE = "TRANSPOSE"
     
-    def __init__(self, op: str, i = None, j = None, k = None) -> None:
+    def __init__(self, op: str, i: float | None = None, j: float | None = None, k: float | None = None) -> None:
         match op:
             case MatrixOperation.ADD_ROWS:
                 if k != 1:
@@ -83,8 +83,8 @@ class Matrix:
         #
         # It is like the previous operation than
         # self.__last_operation
-        self.__last_rows_state = self.__rows    
-        self.__last_operation_state = None
+        self.__last_rows_state: MutableSequence[Row] = self.__rows    
+        self.__last_operation_state: MatrixOperation | None = None
         
     def __getattribute__(self, name: str) -> Any:
         # instance methods that mutate the state of the matrix
@@ -106,7 +106,7 @@ class Matrix:
         return self.__rows
     
     @rows.setter
-    def rows(self, value: MutableSequence[Row]):
+    def rows(self, value: Sequence[Row]):
         self.__rows.clear()
 
         for row in value:
