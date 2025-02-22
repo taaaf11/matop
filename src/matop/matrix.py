@@ -53,6 +53,7 @@ class MatrixOperation:
             case "DOT_MULTIPLY":
                 ...
             case MatrixOperation.TRANSPOSE:
+                self.message = ""
                 ...
             case _:
                 self.message = "Unsupported."
