@@ -36,6 +36,7 @@ class MatrixOperation:
     ADD_ROWS = "ADD_ROWS"
     INTERCHANGE = "INTERCHANGE"
     SCALAR_MULTIPLY = "SCALAR_MULTIPLY"
+    TRANSPOSE = "TRANSPOSE"
     
     def __init__(self, op: str, i = None, j = None, k = None) -> None:
         match op:
@@ -49,6 +50,8 @@ class MatrixOperation:
             case MatrixOperation.SCALAR_MULTIPLY:
                 self.message = fr"{k}R_{i} \rightarrow R_{i}"
             case "DOT_MULTIPLY":
+                ...
+            case MatrixOperation.TRANSPOSE:
                 ...
             case _:
                 self.message = "Unsupported."
@@ -97,10 +100,17 @@ class Matrix:
             rows=len(self.__rows),
             columns=len(self.__rows[0])
         )
-    
+
     @property
     def rows(self) -> Sequence[Row]:
         return self.__rows
+    
+    @rows.setter
+    def rows(self, value: MutableSequence[Row]):
+        self.__rows.clear()
+
+        for row in value:
+            self._add_row(row)
     
     @property
     def columns(self) -> Sequence[Sequence[int | float]]:
@@ -216,6 +226,7 @@ class Matrix:
             rows_latex.append(row.as_latex())
         
         # add double slash ("\\") at the end of each latex row
+        # how it would appear: ...\\<newline>
         latex += "\\\\\n".join(rows_latex)
         
         latex += f"\n\\end{{{self.brackets_type.value}matrix}}"
@@ -254,5 +265,3 @@ if __name__ == "__main__":
         Row(1,2),
         Row(3,9)
     )
-
-    # print(mat.as_latex(BracketsType.SQUARE))

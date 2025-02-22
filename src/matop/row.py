@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections.abc import MutableSequence, Iterator, Sequence
+from collections.abc import Callable, MutableSequence, Iterator, Sequence
 
 from matop.exceptions import ZeroScalarMultiplication
 
@@ -27,7 +27,7 @@ class Row:
         if scalar == 1:
             return
         
-        is_fractional_zero = lambda n: isinstance(n, float) and str(n).split(".")[1] == "0"
+        is_fractional_zero: Callable[[float | int], float] = lambda n: isinstance(n, float) and str(n).split(".")[1] == "0"
 
         if is_fractional_zero(scalar):
             scalar = int(scalar)

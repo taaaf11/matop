@@ -63,15 +63,11 @@ def determinant(matrix: Matrix) -> float | None:
 
 
 def get_cofactor_matrix(matrix: Matrix) -> Matrix:
-    # i = 0
-    # j = 0
-    
     new_rows: list[Row] = []
-    new_row_interim = []
+    new_row_interim: MutableSequence[float] = []
     
     for i in range(1, len(matrix.rows) + 1):
         for j in range(1, len(matrix.columns) + 1):
-            value = calculate_cofactor_sign(i, j) * cast(float, determinant(next_submatrix(j, matrix, i)))
             new_row_interim.append(
                 calculate_cofactor_sign(i, j) * cast(float, determinant(next_submatrix(j, matrix, i)))
             )
@@ -82,9 +78,9 @@ def get_cofactor_matrix(matrix: Matrix) -> Matrix:
     return Matrix(*new_rows)
 
 def transpose(matrix: Matrix) -> Matrix:
-    new_rows = []
+    new_rows: MutableSequence[Row] = []
     
     for column in matrix.columns:
-        new_rows.append(column)
+        new_rows.append(Row(*column))
         
     return Matrix(*new_rows)
