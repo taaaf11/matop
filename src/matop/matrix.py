@@ -111,21 +111,25 @@ class Matrix:
             
         return Matrix(*new_rows)
     
-    @property
-    def cofactor_matrix(self) -> Matrix:
+    def get_cofactor_matrix(self) -> Matrix:
         new_rows: list[Row] = []
         new_row_interim: MutableSequence[float] = []
         
         for row_index in range(1, len(self.rows) + 1):
             for column_index in range(1, len(self.columns) + 1):
                 new_row_interim.append(
-                    Matrix.calculate_cofactor_sign(row_index, column_index) * cast(float, Matrix.determinant(Matrix.next_submatrix(row_index, column_index, self)))
+                    Matrix.calculate_cofactor_sign(row_index, column_index) * cast(float, Matrix.calculate_determinant(Matrix.next_submatrix(row_index, column_index, self)))
                 )
 
             new_rows.append(Row(*new_row_interim))
             new_row_interim.clear()
+            
+        new_matrix = Matrix(*new_rows)
+
+        if self.auto_print:
+            new_matrix._print_latex()
         
-        return Matrix(*new_rows)
+        return new_matrix
     
     @property
     def rows(self) -> Sequence[Row]:
@@ -243,12 +247,6 @@ class Matrix:
         return (-1) ** (row_pos + col_pos)
     
     @staticmethod
-    def next_minor(row_pos: int, col_pos: int, matrix: Matrix) -> float:
-        element: int | float = matrix.columns[col_pos - 1][row_pos - 1]
-        sign = Matrix.calculate_cofactor_sign(row_pos, col_pos)
-        return sign * element
-    
-    @staticmethod
     def next_submatrix(row_pos: int, col_pos: int, matrix: Matrix) -> Matrix:
         row_to_del = row_pos - 1
         col_to_del = col_pos - 1
@@ -262,7 +260,7 @@ class Matrix:
         return Matrix(*[Row(*row) for row in new_rows])
     
     @staticmethod
-    def determinant(matrix: Matrix) -> float | None:
+    def calculate_determinant(matrix: Matrix) -> float | None:
         if matrix.order.rows != matrix.order.columns:
             return None
         
@@ -279,9 +277,10 @@ class Matrix:
 
             return det
 
+        row_index = 1
         if matrix.order.columns > 2:
             for col_index in range(1, len(matrix.columns) + 1):
-                det += Matrix.next_minor(1, col_index, matrix) * cast(float, Matrix.determinant(Matrix.next_submatrix(1, col_index, matrix)))
+                det += Matrix.calculate_cofactor_sign(row_index, col_index) * matrix.columns[col_index - 1][row_index - 1] * cast(float, Matrix.calculate_determinant(Matrix.next_submatrix(row_index, col_index, matrix)))
             
         return det
      

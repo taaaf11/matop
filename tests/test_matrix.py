@@ -36,6 +36,83 @@ class TestMatrix(unittest.TestCase):
             ]
         )
         
+    def test_transpose_property(self):
+        self.assertEqual(
+            self.matrix1.transpose,
+            Matrix(
+                Row(1, 7, 3),
+                Row(2, 8, 5),
+                Row(3, 9, 7),
+            )
+        )
+        
+    def test_transposify(self):
+        self.matrix1.transposify()
+        self.assertEqual(
+            self.matrix1,
+            Matrix(
+                Row(1, 7, 3),
+                Row(2, 8, 5),
+                Row(3, 9, 7),
+            )
+        )
+        
+    def test_cofactor_matrix(self):
+        cofactor_matrix = self.matrix1.get_cofactor_matrix()
+        self.assertEqual(
+            cofactor_matrix,
+            Matrix(
+                Row(11, -22, 11),
+                Row(1, -2, 1),
+                Row(-6, 12, -6),
+            )
+        )
+    
+    def test_determinant(self):
+        self.assertEqual(
+            Matrix.calculate_determinant(self.matrix1),
+            0
+        )
+        
+        impossible_determinant_matrix = Matrix(
+            Row(1, 2, 5),
+            Row(2, 5, 6)
+        )
+        
+        self.assertIsNone(
+            Matrix.calculate_determinant(impossible_determinant_matrix),
+            None
+        )
+        
+    def test_calculate_cofactor_sign(self):
+        cofactor_sign_1_1 = Matrix.calculate_cofactor_sign(1, 1)
+        cofactor_sign_1_2 = Matrix.calculate_cofactor_sign(1, 2)
+        
+        self.assertTrue(
+            cofactor_sign_1_1 == 1 and
+            cofactor_sign_1_2 == -1
+        )
+    
+    def test_next_submatrix(self):
+        submatrix_1_1 = Matrix.next_submatrix(1, 1, self.matrix1)
+        submatrix_1_2 = Matrix.next_submatrix(1, 2, self.matrix1)
+        
+        self.assertEqual(
+            submatrix_1_1,
+            Matrix(
+                Row(8, 9),
+                Row(5, 7),
+            )
+        )
+        
+        self.assertEqual(
+            submatrix_1_2,
+            Matrix(
+                Row(7, 9),
+                Row(3, 7),
+            )
+        )
+        
     def test_add_rows_without_scalar(self):
         self.matrix1.add_rows(1, 2)
         self.assertEqual(
