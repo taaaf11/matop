@@ -11,6 +11,7 @@ keywords = ["matrix"]
 classifiers = [
   # Indicate who your project is intended for
   "Intended Audience :: Users",
+  "Private :: Do Not Upload"
 ]
 
 

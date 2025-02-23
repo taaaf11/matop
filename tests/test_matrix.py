@@ -94,10 +94,7 @@ class TestMatrix(unittest.TestCase):
             Row(2, 5, 6)
         )
         
-        self.assertIsNone(
-            Matrix.calculate_determinant(impossible_determinant_matrix),
-            None
-        )
+        self.assertIsNone(Matrix.calculate_determinant(impossible_determinant_matrix))
         
     def test_calculate_cofactor_sign(self):
         cofactor_sign_1_1 = Matrix.calculate_cofactor_sign(1, 1)

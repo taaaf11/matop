@@ -90,7 +90,7 @@ class Matrix:
         
     def __getattribute__(self, name: str) -> Any:
         # instance methods that mutate the state of the matrix
-        if name in "add_rows interchange_rows scalar_multiply_row dot_multiply transposify".split():
+        if name in "add_rows interchange_rows scalar_multiply_row dot_multiply".split():
             self.__last_rows_state = self.__rows
             self.__last_operation_state = self.__last_operation
 
