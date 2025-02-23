@@ -126,8 +126,14 @@ class Matrix:
         if determinant == 0:
             return None
 
+        old_auto_print = self.auto_print
+        self.auto_print = False
+
         adjoint: Matrix = cast(Matrix, Matrix.get_cofactor_matrix(self)).transpose
         adjoint.scalar_multiply(1 / determinant)
+        
+        self.auto_print = old_auto_print
+
         return adjoint
     
     def get_cofactor_matrix(self) -> Matrix | None:
@@ -307,21 +313,14 @@ class Matrix:
         return det
      
     def transposify(self) -> None:
-        self.rows = self.transpose.rows
-
-        self.__last_operation = MatrixOperation(MatrixOperation.TRANSPOSE)
-
-        if self.auto_print:
-            self._print_latex()
+        self.transpose._print_latex()
             
     def inversify(self) -> None:
         if not self.is_square:
             raise InconsistentOrder("Inverse is not possible for non-square matrices.")
         
-        if (inverse := self.inverse) is None:
-            return
-        
-        self.rows = cast(Matrix, self.inverse).rows
+        inverse = cast(Matrix, self.inverse)
+        inverse._print_latex()
         
     def as_latex(self) -> str:
         latex = ""

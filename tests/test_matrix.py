@@ -54,22 +54,6 @@ class TestMatrix(unittest.TestCase):
             )
         )
         
-    def test_inversify(self):
-        inversible = Matrix(
-            Row(3, 0, 2),
-            Row(2, 0, -2),
-            Row(0, 1, 1),
-        )
-        inversible.inversify()
-        self.assertEqual(
-            inversible,
-            Matrix(
-                Row(0.2, 0.2, 0),
-                Row(-0.2, 0.3, 1),
-                Row(0.2, -0.3, 0),
-            )
-        )
-        
     def test_transpose_property(self):
         self.assertEqual(
             self.matrix1.transpose,
@@ -79,18 +63,7 @@ class TestMatrix(unittest.TestCase):
                 Row(3, 9, 7),
             )
         )
-        
-    def test_transposify(self):
-        self.matrix1.transposify()
-        self.assertEqual(
-            self.matrix1,
-            Matrix(
-                Row(1, 7, 3),
-                Row(2, 8, 5),
-                Row(3, 9, 7),
-            )
-        )
-        
+       
     def test_cofactor_matrix(self):
         cofactor_matrix = self.matrix1.get_cofactor_matrix()
         self.assertEqual(
