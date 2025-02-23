@@ -1,3 +1,8 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+
 [project]
 name = "matrixops"
 version = "1.0.0"
@@ -7,7 +12,6 @@ authors = [
 ]
 readme = "README.md"
 keywords = ["matrix"]
-
 classifiers = [
   # Indicate who your project is intended for
   "Intended Audience :: Users",
