@@ -23,15 +23,15 @@ mat1 = Matrix(
 3. Perform required operations such as:
 ```python
 # for interchanging rows
-# interchanges rows 0 and 1 (rows are zero-indexed)
-mat1.interchange_rows(0, 1)
+# interchanges rows 1 and 2 (rows and columns both are one-indexed)
+mat1.interchange_rows(1, 2)
 
 # for addition of rows
-# adds row 1 to row 0
-mat1.add_rows(0, 1)
+# adds row 2 to row 1
+mat1.add_rows(1, 2)
 
-# adds row 1 to row 0 after multiplying with scalar 2
-mat1.add_rows(0, 1, 2)
+# adds row 2 to row 1 after multiplying with scalar 2
+mat1.add_rows(1, 2, 2)
 
 # undo last operation
 mat1.undo()
