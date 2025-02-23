@@ -104,6 +104,10 @@ class Matrix:
         )
         
     @property
+    def is_square(self) -> bool:
+        return self.order.rows == self.order.columns
+        
+    @property
     def transpose(self) -> Matrix:
         new_rows: MutableSequence[Row] = []
         
@@ -127,7 +131,7 @@ class Matrix:
         return adjoint
     
     def get_cofactor_matrix(self) -> Matrix | None:
-        if self.order.rows != self.order.columns:
+        if not self.is_square:
             return None
         
         new_rows: list[Row] = []
@@ -150,20 +154,20 @@ class Matrix:
         return new_matrix
     
     @property
-    def rows(self) -> Sequence[Row]:
+    def rows(self) -> MutableSequence[Row]:
         return self.__rows
     
     @rows.setter
-    def rows(self, value: Sequence[Row]):
+    def rows(self, value: MutableSequence[Row] | Sequence[Row]):
         self.__rows.clear()
 
         for row in value:
             self._add_row(row)
     
     @property
-    def columns(self) -> Sequence[Sequence[int | float]]:
+    def columns(self) -> MutableSequence[MutableSequence[int | float]]:
         columns: list[list[int | float]] = []
-        
+
         for _ in range(self.order.columns):
             columns.append([])
 
@@ -174,7 +178,7 @@ class Matrix:
                 columns[col_idx].append(row.nums[row_elem_idx])
                 row_elem_idx += 1
         
-        return columns
+        return cast(MutableSequence[MutableSequence[int | float]], columns)
     
     def _add_row(self, row: Row) -> None:
         """
@@ -279,7 +283,7 @@ class Matrix:
     
     @staticmethod
     def calculate_determinant(matrix: Matrix) -> float | None:
-        if matrix.order.rows != matrix.order.columns:
+        if not matrix.is_square:
             return None
         
         det: float = 0
