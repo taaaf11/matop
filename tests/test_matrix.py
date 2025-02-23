@@ -35,6 +35,40 @@ class TestMatrix(unittest.TestCase):
                 [3, 9, 7],
             ]
         )
+    
+    def test_inverse_property(self):
+        inverse_mat1 = self.matrix1.inverse
+        self.assertIsNone(inverse_mat1)
+        
+        mat2 = Matrix(
+            Row(3, 0, 2),
+            Row(2, 0, -2),
+            Row(0, 1, 1),
+        )
+        self.assertEqual(
+            mat2.inverse,
+            Matrix(
+                Row(0.2, 0.2, 0),
+                Row(-0.2, 0.3, 1),
+                Row(0.2, -0.3, 0),
+            )
+        )
+        
+    def test_inversify(self):
+        inversible = Matrix(
+            Row(3, 0, 2),
+            Row(2, 0, -2),
+            Row(0, 1, 1),
+        )
+        inversible.inversify()
+        self.assertEqual(
+            inversible,
+            Matrix(
+                Row(0.2, 0.2, 0),
+                Row(-0.2, 0.3, 1),
+                Row(0.2, -0.3, 0),
+            )
+        )
         
     def test_transpose_property(self):
         self.assertEqual(

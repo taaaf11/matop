@@ -112,6 +112,20 @@ class Matrix:
             
         return Matrix(*new_rows)
     
+    @property
+    def inverse(self) -> Matrix | None:
+        if not self.is_square:
+            return None
+
+        determinant: float = cast(float, Matrix.calculate_determinant(self))
+
+        if determinant == 0:
+            return None
+
+        adjoint: Matrix = cast(Matrix, Matrix.get_cofactor_matrix(self)).transpose
+        adjoint.scalar_multiply(1 / determinant)
+        return adjoint
+    
     def get_cofactor_matrix(self) -> Matrix | None:
         if self.order.rows != self.order.columns:
             return None
@@ -295,6 +309,15 @@ class Matrix:
 
         if self.auto_print:
             self._print_latex()
+            
+    def inversify(self) -> None:
+        if not self.is_square:
+            raise InconsistentOrder("Inverse is not possible for non-square matrices.")
+        
+        if (inverse := self.inverse) is None:
+            return
+        
+        self.rows = cast(Matrix, self.inverse).rows
         
     def as_latex(self) -> str:
         latex = ""
