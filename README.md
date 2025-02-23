@@ -9,8 +9,7 @@ When running in ipython kernel (jupyter lab or google colab), the functions auto
 ## How to use
 1. Import required objects
 ```python
-from matop.row import Row
-from matop.matrix import Matrix
+from matop import Row, Matrix
 ```
 2. Creating `Matrix` object
 ```python
