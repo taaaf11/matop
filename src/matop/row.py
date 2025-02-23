@@ -10,7 +10,7 @@ class Row:
         self.__nums: MutableSequence[int | float] = list(nums)
         
     @property
-    def nums(self) -> Sequence[int | float]:
+    def nums(self) -> MutableSequence[int | float]:
         return self.__nums
     
     def mul_by_col(self, column: Sequence[int | float]) -> int | float:
@@ -33,7 +33,7 @@ class Row:
             scalar = int(scalar)
 
         for index in range(len(self.__nums)):
-            product = self.__nums[index] * scalar
+            product = round(self.__nums[index] * scalar, 1)
 
             if is_fractional_zero(product):
                 product = int(product)

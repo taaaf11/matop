@@ -173,7 +173,7 @@ class Matrix:
         
         self.__rows.append(row)
             
-    def add_rows(self, row1_idx: int, row2_idx: int, scalar: int = 1) -> None:
+    def add_rows(self, row1_idx: int, row2_idx: int, scalar: float = 1) -> None:
         """
         Don't confuse this with `_add_row`. This function
         adds two rows present in the current matrix
@@ -215,11 +215,11 @@ class Matrix:
         if self.auto_print:
             self._print_latex()
     
-    def scalar_multiply(self, scalar: int) -> None:
+    def scalar_multiply(self, scalar: float) -> None:
         for row in self.__rows:
             row.mul_by_scalar(scalar)
     
-    def scalar_multiply_row(self, row_idx: int, scalar: int) -> None:
+    def scalar_multiply_row(self, row_idx: int, scalar: float) -> None:
         self.__rows[row_idx - 1].mul_by_scalar(scalar)
 
         self.__last_operation = MatrixOperation(MatrixOperation.SCALAR_MULTIPLY, i=row_idx, k=scalar)
