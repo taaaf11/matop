@@ -4,7 +4,7 @@ from collections.abc import MutableSequence
 import unittest
 
 # from src.matop.row import Row
-from matop.row import Row  # type: ignore
+from matrixops.row import Row  # type: ignore
 
 
 class TestRow(unittest.TestCase):

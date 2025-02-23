@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Callable, MutableSequence, Iterator, Sequence
 
-from matop.exceptions import ZeroScalarMultiplication
+from matrixops.exceptions import ZeroScalarMultiplication
 
 
 class Row:

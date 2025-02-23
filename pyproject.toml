@@ -1,6 +1,6 @@
 [project]
-name = "matop"
-version = "0.0.1"
+name = "matrixops"
+version = "1.0.0"
 description = "A package for creating matrices and doing basic operations on them."
 authors = [
   {name = "Muhammad Altaaf", email = "taafuuu@gmail.com"},

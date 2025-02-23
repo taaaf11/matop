@@ -6,8 +6,8 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any, cast
 
-from matop.row import Row
-from matop.exceptions import InconsistentOrder
+from matrixops.row import Row
+from matrixops.exceptions import InconsistentOrder
 
 try:
     get_ipython  # check if imported into ipython is running

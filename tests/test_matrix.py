@@ -1,8 +1,8 @@
 import unittest
 
-from matop.exceptions import InconsistentOrder
-from matop.matrix import BracketsType, Matrix, MatrixOrder  # type: ignore
-from matop.row import Row  # type: ignore
+from matrixops.exceptions import InconsistentOrder
+from matrixops.matrix import BracketsType, Matrix, MatrixOrder  # type: ignore
+from matrixops.row import Row  # type: ignore
 
 
 class TestMatrix(unittest.TestCase):
